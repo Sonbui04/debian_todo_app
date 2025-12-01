@@ -3,7 +3,7 @@ import axios from "axios";
 import "./App.css";
 
 // DÙNG TÊN SERVICE TRONG DOCKER
-const API_BASE = "http://todo_backend:8080/api";
+const API_BASE = "http://localhost:8080/api";
 
 function App() {
   const [username, setUsername] = useState("");
