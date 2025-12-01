@@ -2,45 +2,39 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
-// DÙNG TÊN SERVICE TRONG DOCKER
+// API backend
 const API_BASE = "http://localhost:8080/api";
 
 function App() {
+  // ================= AUTH STATE =================
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
   const [authMode, setAuthMode] = useState("login");
+  const [currentUser, setCurrentUser] = useState(null);
   const [message, setMessage] = useState("");
 
-  const [showReset, setShowReset] = useState(false);
-  const [resetUsername, setResetUsername] = useState("");
-  const [resetNewPassword, setResetNewPassword] = useState("");
-  const [resetMessage, setResetMessage] = useState("");
-
+  // ================= TODO STATE =================
   const [todos, setTodos] = useState([]);
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [fileToUpload, setFileToUpload] = useState(null);
 
+  // Load todos when login success
   useEffect(() => {
     if (currentUser) loadTodos();
   }, [currentUser]);
 
-  // --- AUTH ---
+  // ================= AUTH API =================
   const register = async () => {
     try {
-      await axios.post(`${API_BASE}/auth/register`, {
-        username,
-        password,
-      });
-
-      setMessage("Đăng ký thành công! Hãy đăng nhập.");
+      await axios.post(`${API_BASE}/auth/register`, { username, password });
+      setMessage("Đăng ký thành công!");
+      setAuthMode("login");
       setUsername("");
       setPassword("");
-      setAuthMode("login");
-    } catch (err) {
-      setMessage("Đăng ký thất bại, tài khoản có thể đã tồn tại.");
+    } catch {
+      setMessage("Tài khoản đã tồn tại.");
     }
   };
 
@@ -52,34 +46,18 @@ function App() {
       });
       setCurrentUser(res.data);
       setMessage("");
-    } catch (err) {
-      setMessage("Đăng nhập thất bại: sai tài khoản hoặc mật khẩu.");
+    } catch {
+      setMessage("Sai tài khoản hoặc mật khẩu.");
     }
   };
 
-  const logout = async () => {
-    await axios.post(`${API_BASE}/auth/logout`).catch(() => {});
+  const logout = () => {
     setCurrentUser(null);
     setTodos([]);
-    setAuthMode("login");
   };
 
-  // --- RESET PASSWORD ---
-  const resetPassword = async () => {
-    try {
-      await axios.post(`${API_BASE}/auth/reset-password`, {
-        username: resetUsername,
-        newPassword: resetNewPassword,
-      });
-      setResetMessage("Đổi mật khẩu thành công!");
-    } catch (err) {
-      setResetMessage("Không tìm thấy tài khoản.");
-    }
-  };
-
-  // --- TODOS ---
+  // ================= TODO API =================
   const loadTodos = async () => {
-    if (!currentUser) return;
     const res = await axios.get(`${API_BASE}/todos/${currentUser.userId}`);
     setTodos(res.data);
   };
@@ -106,12 +84,6 @@ function App() {
     setNewDesc("");
     setEditingId(null);
     loadTodos();
-  };
-
-  const editTodo = (todo) => {
-    setEditingId(todo.id);
-    setNewTitle(todo.title);
-    setNewDesc(todo.description || "");
   };
 
   const toggleDone = async (todo) => {
@@ -141,12 +113,12 @@ function App() {
     loadTodos();
   };
 
-  // --- UI ---
+  // ================= AUTH UI =================
   if (!currentUser) {
     return (
       <div className="auth-root">
         <div className="auth-card">
-          <h2>Login Form</h2>
+          <h2 className="auth-title">Todo App</h2>
 
           <div className="auth-tabs">
             <button
@@ -193,17 +165,19 @@ function App() {
     );
   }
 
-  // --- TODO UI ---
+  // ================= MAIN UI =================
   return (
     <div className="app-root">
       <div className="app-card">
         <header className="app-header">
           <h1>Todo App</h1>
-          <button className="btn btn-secondary" onClick={logout}>
+
+          <button className="btn btn-danger" onClick={logout}>
             Đăng xuất
           </button>
         </header>
 
+        {/* FORM */}
         <section className="todo-form">
           <input
             className="app-input"
@@ -223,6 +197,7 @@ function App() {
           </button>
         </section>
 
+        {/* TODO LIST */}
         <section>
           {todos.map((t) => (
             <div key={t.id} className="todo-item">
@@ -237,28 +212,41 @@ function App() {
                   {t.title}
                 </div>
 
-                {t.description && <div>{t.description}</div>}
-
-                {t.attachmentPath && (
-                  <div>File: {t.attachmentPath}</div>
+                {t.description && (
+                  <div className="todo-desc">{t.description}</div>
                 )}
 
-                <input
-                  type="file"
-                  onChange={(e) => setFileToUpload(e.target.files[0])}
-                />
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => uploadAttachment(t.id)}
-                >
-                  Attach
-                </button>
+                {/* 🟦 FILE AREA */}
+                {t.attachmentPath && (
+                  <div className="todo-file">
+                    📎 {t.attachmentPath.split("_").pop()}
+
+                    <a
+                      className="btn btn-secondary"
+                      href={`http://localhost:8080${t.attachmentPath}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Xem / Tải xuống
+                    </a>
+                  </div>
+                )}
+
+                <div className="attach-wrap">
+                  <input
+                    type="file"
+                    onChange={(e) => setFileToUpload(e.target.files[0])}
+                  />
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => uploadAttachment(t.id)}
+                  >
+                    Attach
+                  </button>
+                </div>
               </div>
 
-              <button
-                className="btn btn-danger"
-                onClick={() => deleteTodo(t.id)}
-              >
+              <button className="btn btn-danger" onClick={() => deleteTodo(t.id)}>
                 Xóa
               </button>
             </div>
