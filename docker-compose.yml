@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    container_name: todo_postgres
+    environment:
+      POSTGRES_DB: todo_db
+      POSTGRES_USER: todo_user
+      POSTGRES_PASSWORD: todo_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: todo_backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/todo_db
+      SPRING_DATASOURCE_USERNAME: todo_user
+      SPRING_DATASOURCE_PASSWORD: todo_pass
+      FILE_UPLOAD_DIR: /uploads
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    volumes:
+      - backend_uploads:/uploads
+
+  frontend:
+    build: ./frontend
+    container_name: todo_frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
+  backend_uploads:

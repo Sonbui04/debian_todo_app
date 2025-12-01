@@ -1,0 +1,488 @@
+/* ===== RESET CƠ BẢN ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #f3f4f6;
+}
+
+/* =========================================================
+   LOGIN FULLSCREEN CARD
+   ========================================================= */
+
+.auth-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #8ec5fc 0%, #e0c3fc 100%);
+}
+
+/* Card trắng giữa màn hình */
+.auth-card {
+  width: 360px;
+  max-width: 100%;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 22px 22px 24px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.25);
+}
+
+/* Tiêu đề Login Form */
+.auth-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #111827;
+}
+
+/* Tabs Login / Signup */
+.auth-tabs {
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 3px;
+  margin-bottom: 16px;
+}
+
+.auth-tab {
+  flex: 1;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 0;
+  color: #6b7280;
+  transition: all 0.18s ease;
+}
+
+.auth-tab.active {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.45);
+}
+
+/* Thông báo login/register */
+.auth-message {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.auth-ok {
+  color: #15803d;
+}
+.auth-error {
+  color: #b91c1c;
+}
+
+/* Input trong login card */
+.auth-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  font-size: 13px;
+  background: #f9fafb;
+  transition: all 0.18s ease;
+}
+
+.auth-input::placeholder {
+  color: #9ca3af;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35);
+}
+
+/* Link "Forgot password?" */
+.forgot-link {
+  margin-top: 2px;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  color: #2563eb;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* Nút Login/Signup full chiều ngang */
+.auth-submit {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Text dưới cùng */
+.auth-bottom-text {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.link-button {
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  color: #2563eb;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* Box reset password trong card login */
+.reset-box {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reset-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.reset-message {
+  font-size: 12px;
+}
+
+.reset-ok {
+  color: #15803d;
+}
+
+.reset-error {
+  color: #b91c1c;
+}
+
+.reset-button {
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+/* =========================================================
+   BUTTON dùng chung
+   ========================================================= */
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* primary */
+.btn-primary {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.35);
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+/* secondary */
+.btn-secondary {
+  background: #eef2ff;
+  color: #3730a3;
+  border: 1px solid #c7d2fe;
+}
+
+.btn-secondary:hover {
+  background: #e0e7ff;
+}
+
+/* danger */
+.btn-danger {
+  background: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 6px 12px rgba(239, 68, 68, 0.35);
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+/* =========================================================
+   TODO APP (sau khi login)
+   ========================================================= */
+
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px;
+}
+
+.app-card {
+  width: 100%;
+  max-width: 880px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px 22px 26px;
+  box-shadow:
+    0 18px 36px rgba(148, 163, 184, 0.4),
+    0 0 0 1px rgba(203, 213, 225, 0.7);
+}
+
+/* HEADER TODO */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.app-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.app-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* USER INFO */
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.user-name {
+  font-size: 14px;
+  color: #111827;
+}
+
+.user-name span {
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* ===== FORM TODO – style giống login card ===== */
+.todo-form {
+  max-width: 420px;                 /* form hẹp lại, giống login */
+  margin: 16px auto;                /* căn giữa trong app-card */
+  padding: 18px 18px 20px;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+.todo-form-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+/* input trong form todo */
+.todo-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.app-input {
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  font-size: 13px;
+  background: #f9fafb;
+  transition: all 0.15s ease;
+}
+
+.app-input::placeholder {
+  color: #9ca3af;
+}
+
+.app-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35);
+  background: #ffffff;
+}
+
+/* textarea bo mềm hơn */
+.todo-textarea {
+  min-height: 70px;
+  resize: vertical;
+  border-radius: 14px;
+}
+
+/* Nút trong form todo giống nút login: full width */
+.todo-form .btn-row {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.todo-form .btn-primary {
+  width: 100%;
+}
+
+/* ===== DANH SÁCH TODO ===== */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.todo-empty {
+  font-size: 13px;
+  color: #9ca3af;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* Card từng todo */
+.todo-item {
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 8px 10px;
+  background: #ffffff;
+  display: flex;
+  gap: 8px;
+  box-shadow: 0 3px 8px rgba(148, 163, 184, 0.2);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.todo-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(148, 163, 184, 0.28);
+}
+
+.todo-checkbox {
+  margin-top: 4px;
+}
+
+.todo-main {
+  flex: 1;
+}
+
+.todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.todo-title {
+  font-weight: 600;
+  color: #111827;
+  word-break: break-word;
+}
+
+.todo-title.done {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.todo-description {
+  font-size: 13px;
+  color: #4b5563;
+  margin-top: 2px;
+  white-space: pre-wrap;
+}
+
+.todo-file-row {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.todo-file-row code {
+  background: #f3f4f6;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.todo-file-input {
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.todo-file-input input[type="file"] {
+  font-size: 11px;
+}
+
+.todo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 640px) {
+  .auth-card {
+    width: 100%;
+    padding-inline: 16px;
+  }
+
+  .app-card {
+    padding: 16px 14px 20px;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .todo-item {
+    flex-direction: column;
+  }
+
+  .todo-actions {
+    flex-direction: row;
+  }
+}
